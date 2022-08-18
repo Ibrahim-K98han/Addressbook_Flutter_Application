@@ -14,6 +14,10 @@ class NewContactPage extends StatefulWidget {
 
 class _NewContactPageState extends State<NewContactPage> {
   final nameController = TextEditingController();
+  final mobileController = TextEditingController();
+  final emailController = TextEditingController();
+  final streetController = TextEditingController();
+  final websiteController = TextEditingController();
   String? dob;
   String? imagePath;
   ImageSource source = ImageSource.camera;
@@ -26,6 +30,10 @@ class _NewContactPageState extends State<NewContactPage> {
   @override
   void dispose() {
     nameController.dispose();
+    mobileController.dispose();
+    emailController.dispose();
+    streetController.dispose();
+    websiteController.dispose();
     super.dispose();
   }
 
@@ -45,6 +53,45 @@ class _NewContactPageState extends State<NewContactPage> {
               prefixIcon: Icon(Icons.person),
               filled: true,
               labelText: 'Full Name'
+            ),
+          ),
+          SizedBox(height: 10,),
+          TextField(
+            keyboardType: TextInputType.phone,
+            controller: mobileController,
+            decoration: InputDecoration(
+                prefixIcon: Icon(Icons.phone),
+                filled: true,
+                labelText: 'Enter Mobile Number'
+            ),
+          ),
+          SizedBox(height: 10,),
+          TextField(
+            keyboardType: TextInputType.emailAddress,
+            controller: emailController,
+            decoration: InputDecoration(
+                prefixIcon: Icon(Icons.email),
+                filled: true,
+                labelText: 'Enter Email Address'
+            ),
+          ),
+          SizedBox(height: 10,),
+          TextField(
+            keyboardType: TextInputType.streetAddress,
+            controller: streetController,
+            decoration: InputDecoration(
+                prefixIcon: Icon(Icons.place),
+                filled: true,
+                labelText: 'Enter Your Address'
+            ),
+          ),
+          SizedBox(height: 10,),
+          TextField(
+            keyboardType: TextInputType.text,
+            controller: websiteController,
+            decoration: InputDecoration(
+                filled: true,
+                labelText: 'Your Web address'
             ),
           ),
           SizedBox(height: 10,),
