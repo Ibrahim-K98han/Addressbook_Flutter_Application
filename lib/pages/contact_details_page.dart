@@ -76,12 +76,22 @@ class _ContactDetailsPageState extends State<ContactDetailsPage> {
     }
   }
 
-  void _smsContact() {
-
+  void _smsContact() async{
+    final uri = Uri.parse('sms:${contact.mobile}');
+    if(await canLaunchUrl(uri)){
+    await launchUrl(uri);
+    }else{
+    throw 'cannot launch url';
+    }
   }
 
-  void _mailContact() {
-
+  void _mailContact() async{
+    final uri = Uri.parse('mailto:${contact.email}');
+    if(await canLaunchUrl(uri)){
+    await launchUrl(uri);
+    }else{
+    throw 'cannot launch url';
+    }
   }
 
   void _showMap() async{
