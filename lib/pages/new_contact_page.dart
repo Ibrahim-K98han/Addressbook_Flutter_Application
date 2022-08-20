@@ -1,6 +1,8 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_addressbook_app/models/contact_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -20,6 +22,7 @@ class _NewContactPageState extends State<NewContactPage> {
   final websiteController = TextEditingController();
   String? dob;
   String? imagePath;
+  String genderGroupValue = 'Male';
   ImageSource source = ImageSource.camera;
 
   @override
@@ -42,6 +45,12 @@ class _NewContactPageState extends State<NewContactPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('New Contact'),
+        actions: [
+          IconButton(
+              onPressed: _saveContact,
+              icon: Icon(Icons.save),
+          )
+        ],
       ),
       body: ListView(
         padding: EdgeInsets.all(16.0),
@@ -80,9 +89,9 @@ class _NewContactPageState extends State<NewContactPage> {
             keyboardType: TextInputType.streetAddress,
             controller: streetController,
             decoration: InputDecoration(
-                prefixIcon: Icon(Icons.place),
+                prefixIcon: Icon(Icons.my_location),
                 filled: true,
-                labelText: 'Enter Your Address'
+                labelText: 'Streeet Address'
             ),
           ),
           SizedBox(height: 10,),
@@ -90,11 +99,47 @@ class _NewContactPageState extends State<NewContactPage> {
             keyboardType: TextInputType.text,
             controller: websiteController,
             decoration: InputDecoration(
+                prefixIcon: Icon(Icons.web),
                 filled: true,
-                labelText: 'Your Web address'
+                labelText: 'Website'
             ),
           ),
           SizedBox(height: 10,),
+          Card(
+            elevation: 8,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Select Gender'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Radio<String>(
+                      value: 'Male',
+                      groupValue: genderGroupValue,
+                      onChanged: (value){
+                        setState((){
+                          genderGroupValue = value!;
+                        });
+                      },
+                    ),
+                    Text('Male'),
+                    SizedBox(width: 7,),
+                    Radio<String>(
+                      value: 'Female',
+                      groupValue: genderGroupValue,
+                      onChanged: (value){
+                        setState((){
+                          genderGroupValue = value!;
+                        });
+                      },
+                    ),
+                    Text('Female'),
+                  ],
+                ),
+              ],
+            ),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -165,5 +210,18 @@ class _NewContactPageState extends State<NewContactPage> {
         imagePath = pickedFile.path;
       });
     }
+  }
+
+  void _saveContact() {
+    final contact = ContactModel(
+      name: nameController.text,
+      mobile: mobileController.text,
+      email: emailController.text,
+      streetAddress: streetController.text,
+      website: websiteController.text,
+      dob: dob,
+      image: imagePath,
+      gender: genderGroupValue,
+    );
   }
 }
