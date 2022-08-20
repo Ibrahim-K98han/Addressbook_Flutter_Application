@@ -42,9 +42,7 @@ class _ContactListPageState extends State<ContactListPage> {
             .pushNamed(context,
             NewContactPage.routeName
         ).then((_){
-          setState((){
-
-          });
+          setState((){});
         }),
         child: Icon(Icons.add),
       ),
