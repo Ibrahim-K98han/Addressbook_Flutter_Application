@@ -43,4 +43,9 @@ class ContactModel{
       this.gender,
       this.website
   });
+
+  @override
+  String toString() {
+    return 'ContactModel{id: $id, name: $name, mobile: $mobile, email: $email, streetAddress: $streetAddress, dob: $dob, image: $image, gender: $gender, website: $website}';
+  }
 }
