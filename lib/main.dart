@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
-    create: (context) => ContactProvider(),
+    create: (context) => ContactProvider()..getAllContact(),
     child: const MyApp(),
   ));
 }

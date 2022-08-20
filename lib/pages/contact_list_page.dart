@@ -45,9 +45,7 @@ class _ContactListPageState extends State<ContactListPage> {
         onPressed: ()=>Navigator
             .pushNamed(context,
             NewContactPage.routeName
-        ).then((_){
-          setState((){});
-        }),
+        ),
         child: Icon(Icons.add),
       ),
     );
