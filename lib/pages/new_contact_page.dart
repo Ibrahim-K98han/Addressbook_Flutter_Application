@@ -223,5 +223,7 @@ class _NewContactPageState extends State<NewContactPage> {
       image: imagePath,
       gender: genderGroupValue,
     );
+    contactList.add(contact);
+    Navigator.pop(context);
   }
 }
