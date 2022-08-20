@@ -31,6 +31,7 @@ class ContactModel{
   String? image;
   String? gender;
   String? website;
+  bool favoite;
 
   ContactModel({
       this.id,
@@ -41,7 +42,8 @@ class ContactModel{
       this.dob,
       this.image,
       this.gender,
-      this.website
+      this.website,
+      this.favoite = false
   });
 
   @override

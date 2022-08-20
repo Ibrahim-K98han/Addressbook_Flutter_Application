@@ -36,6 +36,12 @@ class _ContactListPageState extends State<ContactListPage> {
                   child: Text(contact.name.substring(0,2)),
                 ),
                 title: Text(contact.name),
+                trailing: IconButton(
+                  icon: Icon(contact.favoite ? Icons.favorite : Icons.favorite_border),
+                  onPressed: (){
+
+                  },
+                ),
               ),
             );
           },
