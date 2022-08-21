@@ -25,22 +25,35 @@ class _ContactListPageState extends State<ContactListPage> {
           itemCount: provider.contactList.length,
           itemBuilder: (context, index) {
             final contact = provider.contactList[index];
-            return Card(
-              child: ListTile(
-                onTap: () => Navigator
-                    .pushNamed(
-                    context,
-                    ContactDetailsPage.routeName,
-                    arguments: contact),
-                leading: CircleAvatar(
-                  child: Text(contact.name.substring(0,2)),
-                ),
-                title: Text(contact.name),
-                trailing: IconButton(
-                    icon: Icon(contact.favoite ? Icons.favorite : Icons.favorite_border,color: Colors.red,),
-                    onPressed: (){
-                      provider.updateFavorite(index);
-                    },
+            return Dismissible(
+              key: UniqueKey(),
+              direction: DismissDirection.endToStart,
+              background: Container(
+                alignment: Alignment.centerRight,
+                color: Colors.red,
+                child: Icon(Icons.delete, size: 35,color: Colors.white,),
+              ),
+              confirmDismiss: showConfirmationDialog,
+              onDismissed: (direction){
+                provider.deleteContact(contact);
+              },
+              child: Card(
+                child: ListTile(
+                  onTap: () => Navigator
+                      .pushNamed(
+                      context,
+                      ContactDetailsPage.routeName,
+                      arguments: contact),
+                  leading: CircleAvatar(
+                    child: Text(contact.name.substring(0,2)),
+                  ),
+                  title: Text(contact.name),
+                  trailing: IconButton(
+                      icon: Icon(contact.favoite ? Icons.favorite : Icons.favorite_border,color: Colors.red,),
+                      onPressed: (){
+                        provider.updateFavorite(index);
+                      },
+                  ),
                 ),
               ),
             );
@@ -55,5 +68,27 @@ class _ContactListPageState extends State<ContactListPage> {
         child: Icon(Icons.add),
       ),
     );
+  }
+  Future<bool?> showConfirmationDialog(DismissDirection direction){
+    return showDialog(
+        context: context,
+        builder: (context)=>AlertDialog(
+          title: Text('Delete'),
+          content: Text('Sure to delete this item?'),
+          actions: [
+            TextButton(
+                onPressed: (){
+                  Navigator.pop(context,false);
+                },
+                child: Text('CANCEL'),
+            ),
+            ElevatedButton(
+              onPressed: (){
+                Navigator.pop(context,true);
+              },
+              child: Text('YES'),
+            )
+          ],
+        ));
   }
 }

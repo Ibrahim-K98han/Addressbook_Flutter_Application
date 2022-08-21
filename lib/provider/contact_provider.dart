@@ -19,4 +19,8 @@ class ContactProvider extends ChangeNotifier{
     contactList[index].favoite = !contactList[index].favoite;
     notifyListeners();
   }
+  deleteContact(ContactModel contactModel){
+    contactList.remove(contactModel);
+    notifyListeners();
+  }
 }
