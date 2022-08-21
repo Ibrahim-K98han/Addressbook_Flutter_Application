@@ -14,4 +14,9 @@ class ContactProvider extends ChangeNotifier{
     this.contactList = contactListDB;
     notifyListeners();
   }
+
+  updateFavorite(int index){
+    contactList[index].favoite = !contactList[index].favoite;
+    notifyListeners();
+  }
 }

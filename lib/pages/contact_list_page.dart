@@ -37,10 +37,10 @@ class _ContactListPageState extends State<ContactListPage> {
                 ),
                 title: Text(contact.name),
                 trailing: IconButton(
-                  icon: Icon(contact.favoite ? Icons.favorite : Icons.favorite_border),
-                  onPressed: (){
-
-                  },
+                    icon: Icon(contact.favoite ? Icons.favorite : Icons.favorite_border,color: Colors.red,),
+                    onPressed: (){
+                      provider.updateFavorite(index);
+                    },
                 ),
               ),
             );
