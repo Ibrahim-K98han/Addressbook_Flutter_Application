@@ -6,7 +6,6 @@ import 'package:flutter_addressbook_app/provider/contact_provider.dart';
 import 'package:provider/provider.dart';
 
 class ContactListPage extends StatefulWidget {
-  static const String routeName = '/';
   const ContactListPage({Key? key}) : super(key: key);
 
   @override
@@ -31,28 +30,37 @@ class _ContactListPageState extends State<ContactListPage> {
               background: Container(
                 alignment: Alignment.centerRight,
                 color: Colors.red,
-                child: Icon(Icons.delete, size: 35,color: Colors.white,),
+                child: Icon(
+                  Icons.delete,
+                  size: 35,
+                  color: Colors.white,
+                ),
               ),
               confirmDismiss: showConfirmationDialog,
-              onDismissed: (direction){
+              onDismissed: (direction) {
                 provider.deleteContact(contact);
               },
               child: Card(
                 child: ListTile(
-                  onTap: () => Navigator
-                      .pushNamed(
+                  onTap: () => Navigator.push(
                       context,
-                      ContactDetailsPage.routeName,
-                      arguments: contact),
+                      MaterialPageRoute(
+                        builder: (context) => ContactDetailsPage(
+                          contact: provider.contactList[index],
+                        ),
+                      )),
                   leading: CircleAvatar(
-                    child: Text(contact.name.substring(0,2)),
+                    child: Text(contact.name.substring(0, 2)),
                   ),
                   title: Text(contact.name),
                   trailing: IconButton(
-                      icon: Icon(contact.favoite ? Icons.favorite : Icons.favorite_border,color: Colors.red,),
-                      onPressed: (){
-                        provider.updateFavorite(index);
-                      },
+                    icon: Icon(
+                      contact.favoite ? Icons.favorite : Icons.favorite_border,
+                      color: Colors.red,
+                    ),
+                    onPressed: () {
+                      provider.updateFavorite(index);
+                    },
                   ),
                 ),
               ),
@@ -61,34 +69,37 @@ class _ContactListPageState extends State<ContactListPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: ()=>Navigator
-            .pushNamed(context,
-            NewContactPage.routeName
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NewContactPage(),
+          ),
         ),
         child: Icon(Icons.add),
       ),
     );
   }
-  Future<bool?> showConfirmationDialog(DismissDirection direction){
+
+  Future<bool?> showConfirmationDialog(DismissDirection direction) {
     return showDialog(
         context: context,
-        builder: (context)=>AlertDialog(
-          title: Text('Delete'),
-          content: Text('Sure to delete this item?'),
-          actions: [
-            TextButton(
-                onPressed: (){
-                  Navigator.pop(context,false);
-                },
-                child: Text('CANCEL'),
-            ),
-            ElevatedButton(
-              onPressed: (){
-                Navigator.pop(context,true);
-              },
-              child: Text('YES'),
-            )
-          ],
-        ));
+        builder: (context) => AlertDialog(
+              title: Text('Delete'),
+              content: Text('Sure to delete this item?'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                  },
+                  child: Text('CANCEL'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context, true);
+                  },
+                  child: Text('YES'),
+                )
+              ],
+            ));
   }
 }

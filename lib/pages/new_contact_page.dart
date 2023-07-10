@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 import '../provider/contact_provider.dart';
 
 class NewContactPage extends StatefulWidget {
-  static const String routeName = '/new_contact';
   const NewContactPage({Key? key}) : super(key: key);
 
   @override
@@ -50,64 +49,54 @@ class _NewContactPageState extends State<NewContactPage> {
         title: Text('New Contact'),
         actions: [
           IconButton(
-              onPressed: _saveContact,
-              icon: Icon(Icons.save),
+            onPressed: _saveContact,
+            icon: Icon(Icons.save),
           )
         ],
       ),
       body: ListView(
         padding: EdgeInsets.all(16.0),
         children: [
-          TextField(
-            keyboardType: TextInputType.name,
-            controller: nameController,
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.person),
-              filled: true,
-              labelText: 'Full Name'
-            ),
+          TextInputField(
+              nameController: nameController,
+              labelText: 'Full Name',
+              prefix: Icons.person,
+              keyboardType: TextInputType.name),
+          SizedBox(
+            height: 10,
           ),
-          SizedBox(height: 10,),
-          TextField(
-            keyboardType: TextInputType.phone,
-            controller: mobileController,
-            decoration: InputDecoration(
-                prefixIcon: Icon(Icons.phone),
-                filled: true,
-                labelText: 'Enter Mobile Number'
-            ),
+          TextInputField(
+              nameController: mobileController,
+              prefix: Icons.call,
+              labelText: 'Enter Mobile Number',
+              keyboardType: TextInputType.number),
+          SizedBox(
+            height: 10,
           ),
-          SizedBox(height: 10,),
-          TextField(
-            keyboardType: TextInputType.emailAddress,
-            controller: emailController,
-            decoration: InputDecoration(
-                prefixIcon: Icon(Icons.email),
-                filled: true,
-                labelText: 'Enter Email Address'
-            ),
+          TextInputField(
+              nameController: emailController,
+              labelText: 'Enter Email Address',
+              prefix: Icons.email,
+              keyboardType: TextInputType.emailAddress),
+          SizedBox(
+            height: 10,
           ),
-          SizedBox(height: 10,),
-          TextField(
-            keyboardType: TextInputType.streetAddress,
-            controller: streetController,
-            decoration: InputDecoration(
-                prefixIcon: Icon(Icons.my_location),
-                filled: true,
-                labelText: 'Streeet Address'
-            ),
+          TextInputField(
+            nameController: streetController,
+            prefix: Icons.location_city,
+            labelText: 'Streeet Address',
           ),
-          SizedBox(height: 10,),
-          TextField(
-            keyboardType: TextInputType.text,
-            controller: websiteController,
-            decoration: InputDecoration(
-                prefixIcon: Icon(Icons.web),
-                filled: true,
-                labelText: 'Website'
-            ),
+          SizedBox(
+            height: 10,
           ),
-          SizedBox(height: 10,),
+          TextInputField(
+            nameController: websiteController,
+            prefix: Icons.web_sharp,
+            labelText: 'Website',
+          ),
+          SizedBox(
+            height: 10,
+          ),
           Card(
             elevation: 8,
             child: Column(
@@ -120,19 +109,21 @@ class _NewContactPageState extends State<NewContactPage> {
                     Radio<String>(
                       value: 'Male',
                       groupValue: genderGroupValue,
-                      onChanged: (value){
-                        setState((){
+                      onChanged: (value) {
+                        setState(() {
                           genderGroupValue = value!;
                         });
                       },
                     ),
                     Text('Male'),
-                    SizedBox(width: 7,),
+                    SizedBox(
+                      width: 7,
+                    ),
                     Radio<String>(
                       value: 'Female',
                       groupValue: genderGroupValue,
-                      onChanged: (value){
-                        setState((){
+                      onChanged: (value) {
+                        setState(() {
                           genderGroupValue = value!;
                         });
                       },
@@ -148,42 +139,51 @@ class _NewContactPageState extends State<NewContactPage> {
             children: [
               TextButton(
                   onPressed: _showDatePickerDialog,
-                  child: Text('Select Date of Birth')
-              ),
+                  child: Text('Select Date of Birth')),
               Chip(
-                label: Text(dob == null ? 'No Date Chosen': dob!),
+                label: Text(dob == null ? 'No Date Chosen' : dob!),
               )
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Card(
                 elevation: 5,
-                child: imagePath == null ?
-                    Image.asset('images/person.png',width: 100,height: 100,fit: BoxFit.cover,):
-                    Image.file(File(imagePath!),width: 100,height: 100,fit: BoxFit.cover,),
+                child: imagePath == null
+                    ? Image.asset(
+                        'images/person.png',
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.file(
+                        File(imagePath!),
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton.icon(
-                      onPressed: (){
+                      onPressed: () {
                         source = ImageSource.camera;
                         _getImage();
                       },
                       icon: Icon(Icons.camera),
-                      label: Text('Capture')
-                  ),
+                      label: Text('Capture')),
                   TextButton.icon(
-                      onPressed: (){
+                      onPressed: () {
                         source = ImageSource.gallery;
                         _getImage();
                       },
                       icon: Icon(Icons.photo),
-                      label: Text('Gallery')
-                  )
+                      label: Text('Gallery'))
                 ],
               )
             ],
@@ -193,23 +193,23 @@ class _NewContactPageState extends State<NewContactPage> {
     );
   }
 
-  void _showDatePickerDialog() async{
+  void _showDatePickerDialog() async {
     DateTime? selectedDate = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(1922),
         lastDate: DateTime.now());
-    if(selectedDate != null){
-      setState((){
+    if (selectedDate != null) {
+      setState(() {
         dob = DateFormat('dd/MM/yyyy').format(selectedDate);
       });
     }
   }
 
-  void _getImage() async{
+  void _getImage() async {
     final pickedFile = await ImagePicker().pickImage(source: source);
-    if(pickedFile != null){
-      setState((){
+    if (pickedFile != null) {
+      setState(() {
         imagePath = pickedFile.path;
       });
     }
@@ -226,9 +226,41 @@ class _NewContactPageState extends State<NewContactPage> {
       image: imagePath,
       gender: genderGroupValue,
     );
-    Provider
-        .of<ContactProvider>(context, listen:false)
-        .addContact(contact);
+    Provider.of<ContactProvider>(context, listen: false).addContact(contact);
     Navigator.pop(context);
+  }
+}
+
+class TextInputField extends StatelessWidget {
+  String? labelText;
+  IconData? prefix;
+  TextInputType? keyboardType;
+  TextInputField({
+    Key? key,
+    this.labelText,
+    this.keyboardType,
+    this.prefix,
+    required this.nameController,
+  }) : super(key: key);
+
+  final TextEditingController nameController;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      keyboardType: keyboardType,
+      controller: nameController,
+      decoration: InputDecoration(
+        prefixIcon: Icon(prefix),
+        filled: false,
+        labelText: labelText.toString(),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(),
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(),
+        ),
+      ),
+    );
   }
 }

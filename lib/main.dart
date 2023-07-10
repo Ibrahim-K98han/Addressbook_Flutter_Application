@@ -22,12 +22,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: ContactListPage.routeName,
-      routes: {
-        ContactListPage.routeName : (context) => ContactListPage(),
-        NewContactPage.routeName : (context) => NewContactPage(),
-        ContactDetailsPage.routeName : (context) => ContactDetailsPage()
-      },
+      home: ContactListPage(),
+      //initialRoute: ContactListPage.routeName,
+      // routes: {
+      //   ContactListPage.routeName : (context) => ContactListPage(),
+      //   NewContactPage.routeName : (context) => NewContactPage(),
+      //   ContactDetailsPage.routeName : (context) => ContactDetailsPage()
+      // },
     );
   }
 }
